@@ -1,5 +1,5 @@
 require "aqbanking/version"
 
-module Aqbanking
-  # Your code goes here...
+module AqBanking
+
 end

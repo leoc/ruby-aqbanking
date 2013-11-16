@@ -5,7 +5,7 @@ require 'aqbanking/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "aqbanking"
-  spec.version       = Aqbanking::VERSION
+  spec.version       = AqBanking::VERSION
   spec.authors       = ["Arthur Leonard Andersen"]
   spec.email         = ["leoc.git@gmail.com"]
   spec.description   = %q{`aqbanking` is a simple wrapper around the AqBanking commandline utilities.}
