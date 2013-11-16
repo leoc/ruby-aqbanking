@@ -61,7 +61,7 @@ module AqBanking
       if ARGS[key] == :flag && hash[key]
         "--#{key.to_s}"
       elsif ARGS[key] == :value && hash[key]
-        "--#{key.to_s}=#{hash[key]}"
+        "--#{key.to_s}=#{Shellwords.escape(hash[key])}"
       end
     end.compact.join(' ')
   end
