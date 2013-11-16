@@ -4,7 +4,7 @@ describe AqBanking do
   include AqBanking
 
   context '#with_secure_pin' do
-    let(:user) { mock('User', bank: '123', user_id: '456') }
+    let(:user) { double('User', bank: '123', user_id: '456') }
     let(:pin) { 'secure' }
 
     it 'creates a temporary pinfile with 400' do
