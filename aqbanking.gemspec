@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Aqbanking::VERSION
   spec.authors       = ["Arthur Leonard Andersen"]
   spec.email         = ["leoc.git@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = %q{`aqbanking` is a simple wrapper around the AqBanking commandline utilities.}
+  spec.summary       = %q{Use aqbanking features from ruby.}
+  spec.homepage      = "http://github.com/leoc/ruby-aqbanking"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
