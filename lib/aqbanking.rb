@@ -10,7 +10,11 @@ module AqBanking
     charset: :value,
     cfgdir: :value,
     cfgfile: :value,
-    pinfile: :value
+    pinfile: :value,
+    username: :value,
+    user: :value,
+    server: :value,
+    bank: :value
   }
 
   def self.config=(path)
