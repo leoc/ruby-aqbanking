@@ -1,6 +1,7 @@
 require "aqbanking/version"
 require "aqbanking/user"
 require "aqbanking/account"
+require "aqbanking/transaction"
 
 module AqBanking
   ARGS = {
