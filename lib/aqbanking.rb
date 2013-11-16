@@ -2,11 +2,11 @@ require "aqbanking/version"
 require "aqbanking/account"
 
 module AqBanking
-  def config=(path)
+  def self.config=(path)
     @config = path
   end
 
-  def config
+  def self.config
     @config ||= '.'
   end
 
@@ -27,7 +27,7 @@ module AqBanking
     options = {
       pinfile: nil,
       args: ['--acceptvalidcerts', '--noninteractive',
-             '--charset=utf-8', "--cfgfile=#{config}"]
+             '--charset=utf-8', "--cfgfile=#{AqBanking.config}"]
     }.merge(options)
     "aqhbci-tool4 #{options[:args].join(' ')} #{command}"
   end
@@ -36,7 +36,7 @@ module AqBanking
     options = {
       pinfile: nil,
       args: ['--acceptvalidcerts', '--noninteractive',
-             '--charset=utf-8', "--cfgdir=#{config}"]
+             '--charset=utf-8', "--cfgdir=#{AqBanking.config}"]
     }.merge(options)
     "aqbanking-cli #{options[:args].join(' ')} #{command}"
   end
