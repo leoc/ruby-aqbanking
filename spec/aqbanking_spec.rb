@@ -36,19 +36,21 @@ describe AqBanking do
 
   context '#generate_arguments' do
     it 'escapes value arguments' do
-      AqBanking.send(:generate_arguments, cfgfile: '/tmp/some weird dir').should == '--cfgfile=/tmp/some\\ weird\\ dir'
+      AqBanking.send(:generate_arguments, { cfgfile: '/tmp/some weird dir' }, AqBanking::GLOBAL_ARGS).
+                     should == '--cfgfile=/tmp/some\\ weird\\ dir'
     end
 
     it 'returns only allowed arguments' do
-      AqBanking.send(:generate_arguments, weird: true).should == ''
+      AqBanking.send(:generate_arguments, { weird: true }, AqBanking::GLOBAL_ARGS).should == ''
     end
 
     it 'returns flags if the option is true' do
-      AqBanking.send(:generate_arguments, noninteractive: true).should == '--noninteractive'
+      AqBanking.send(:generate_arguments, { noninteractive: true }, AqBanking::GLOBAL_ARGS).
+        should == '--noninteractive'
     end
 
     it 'does not return flags if the option is false' do
-      AqBanking.send(:generate_arguments, noninteractive: false).should == ''
+      AqBanking.send(:generate_arguments, {noninteractive: false }, AqBanking::GLOBAL_ARGS).should == ''
     end
   end
 

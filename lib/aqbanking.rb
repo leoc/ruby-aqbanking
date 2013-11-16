@@ -4,17 +4,21 @@ require "aqbanking/account"
 require "aqbanking/transaction"
 
 module AqBanking
-  ARGS = {
+  GLOBAL_ARGS = {
     acceptvalidcerts: :flag,
     noninteractive: :flag,
     charset: :value,
     cfgdir: :value,
     cfgfile: :value,
     pinfile: :value,
-    username: :value,
+  }
+
+  CMD_ARGS = {
+    tokentype: :value,
+    bank: :value,
     user: :value,
     server: :value,
-    bank: :value
+    username: :value
   }
 
   class << self
@@ -48,7 +52,12 @@ module AqBanking
         charset: 'utf-8',
         cfgfile: AqBanking.config
       }.merge(options)
-      "aqhbci-tool4 #{generate_arguments(options)} #{command}"
+      [
+       'aqhbci-tool4',
+       generate_arguments(options, GLOBAL_ARGS),
+       command,
+       generate_arguments(options, CMD_ARGS)
+      ].join(' ').strip
     end
 
     def aqcli(command, options = {})
@@ -59,19 +68,25 @@ module AqBanking
         charset: 'utf-8',
         cfgdir: AqBanking.config
       }.merge(options)
-      "aqbanking-cli #{generate_arguments(options)} #{command}"
+      [
+       'aqbanking-cli',
+       generate_arguments(options, GLOBAL_ARGS),
+       command,
+       generate_arguments(options, CMD_ARGS)
+      ].join(' ').strip
     end
 
     private
-    def generate_arguments(hash)
-      ARGS.keys.map do |key|
-        if ARGS[key] == :flag && hash[key]
+    def generate_arguments(hash, args)
+      args.keys.map do |key|
+        if args[key] == :flag && hash[key]
           "--#{key.to_s}"
-        elsif ARGS[key] == :value && hash[key]
+        elsif args[key] == :value && hash[key]
           "--#{key.to_s}=#{Shellwords.escape(hash[key])}"
         end
       end.compact.join(' ')
     end
 
   end
+
 end
