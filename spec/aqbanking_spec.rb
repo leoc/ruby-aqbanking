@@ -36,4 +36,22 @@ describe AqBanking do
     end
   end
 
+  context '#generate_arguments' do
+    it 'escapes value arguments' do
+      generate_arguments(cfgfile: '/tmp/some weird dir').should == '--cfgfile=/tmp/some\\ weird\\ dir'
+    end
+
+    it 'returns only allowed arguments' do
+      generate_arguments(weird: true).should == ''
+    end
+
+    it 'returns flags if the option is true' do
+      generate_arguments(noninteractive: true).should == '--noninteractive'
+    end
+
+    it 'does not return flags if the option is false' do
+      generate_arguments(noninteractive: false).should == ''
+    end
+  end
+
 end
