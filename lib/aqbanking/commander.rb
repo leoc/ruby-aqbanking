@@ -57,10 +57,10 @@ module AqBanking
 
       def execute(process, command, options = {})
         cmd = generate_command(process, command, options)
-        _, _, stderr, status = Open3.popen3(cmd)
+        _, stdout, stderr, status = Open3.popen3(cmd)
         success = status.value.success?
         fail "Command failed:\n#{cmd}\n#{stderr.read}" unless success
-        success
+        [stdout.read, status.value]
       end
 
       private

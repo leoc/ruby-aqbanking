@@ -35,7 +35,8 @@ module AqBanking
 
       def remove(options = {})
         fail 'Missing options: user' unless options[:user]
-        Commander.aqhbci('deluser', user: options[:user])
+        _, status = Commander.aqhbci('deluser', user: options[:user])
+        status.success?
       end
 
       def complain_missing_parameters(hash)

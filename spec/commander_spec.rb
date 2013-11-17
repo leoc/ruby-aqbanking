@@ -46,9 +46,20 @@ describe AqBanking::Commander do
   context '::execute' do
     it 'calls open3 with correct command' do
       expect(Open3).to receive(:popen3).with('process cmd') do
-        [nil, nil, nil, double(value: double(:success? => true))]
+        [nil, double('string', read: 'output string'),
+         nil, double(value: double(:success? => true))]
       end
       AqBanking::Commander.execute('process', 'cmd', {})
+    end
+
+    it 'returns the output and the status' do
+      status = double('exitstatus', success?: true)
+      expect(Open3).to receive(:popen3).with('process cmd') do
+        [nil, double('string', read: 'output string'),
+         nil, double(value: status)]
+      end
+      AqBanking::Commander.execute('process', 'cmd', {}).should ==
+        ['output string', status]
     end
   end
 
