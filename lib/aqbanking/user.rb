@@ -2,10 +2,16 @@ require 'open3'
 
 module AqBanking
   class User
-    attr_accessor :name, :bank, :user_id, :server, :hbciversion
+    attr_accessor :username, :bank, :user, :server, :hbciversion, :context
 
     def initialize(options = {})
-      User.complain_missing_parameters(options)
+      User.complain_missing_parameters(:username, :bank, :user, options)
+      @username = options[:username]
+      @bank = options[:bank]
+      @user = options[:user]
+      @server = options[:server]
+      @hbciversion = options[:hbciversion]
+      @context = options[:context]
     end
 
     class << self
