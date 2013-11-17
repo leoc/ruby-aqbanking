@@ -1,8 +1,8 @@
-require "aqbanking/version"
-require "aqbanking/commander"
-require "aqbanking/user"
-require "aqbanking/account"
-require "aqbanking/transaction"
+require 'aqbanking/version'
+require 'aqbanking/commander'
+require 'aqbanking/user'
+require 'aqbanking/account'
+require 'aqbanking/transaction'
 
 module AqBanking
   GLOBAL_ARGS = {
