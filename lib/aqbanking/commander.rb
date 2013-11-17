@@ -12,7 +12,7 @@ module AqBanking
         f.write "PIN_#{user.bank}_#{user.user_id} = \"#{pin}\"\n"
         f.flush
 
-        yield f if block_given?
+        Context.new(f.path, &block).execute
 
         f.close
         f.unlink
