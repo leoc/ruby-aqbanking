@@ -1,26 +1,6 @@
 require 'spec_helper'
 
 describe AqBanking do
-  context '#with_secure_pin' do
-    let(:user) { double('User', bank: '123', user_id: '456') }
-    let(:pin) { 'secure' }
-
-    it 'creates a temporary pinfile with 400' do
-      AqBanking::with_secure_pin(user, pin) do |f|
-        f.should_not be_nil
-        expect(File).to exist(f.path)
-        File.read(f.path).should == "PIN_123_456 = \"secure\"\n"
-      end
-    end
-
-    it 'deletes the file afterwards' do
-      path = nil
-      AqBanking::with_secure_pin(user, pin) do |f|
-        path = f.path.strip
-      end
-      expect(File).not_to exist(path)
-    end
-  end
 
   context '#aqhbci' do
     it 'returns a aqhbci-tool4 command' do
