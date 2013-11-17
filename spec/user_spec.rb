@@ -36,10 +36,8 @@ describe AqBanking::User do
     end
 
     it 'succeeds if known' do
-      AqBanking::User.add(username: 'A',
-                          bank: '12030000',
-                          user: '123456789',
-                          server: 'http://www.google.com')
+      AqBanking::User.add(username: 'A', bank: '12030000',
+                          user: '123456789', server: 'http://www.google.com')
       AqBanking::User.remove(user: '123456789').should == true
     end
   end
