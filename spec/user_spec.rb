@@ -29,4 +29,18 @@ describe AqBanking::User do
       end
     end
   end
+
+  describe '::remove' do
+    it 'fails if unknown' do
+      expect { AqBanking::User.remove(user: '123456789') }.to raise_error
+    end
+
+    it 'succeeds if known' do
+      AqBanking::User.add(username: 'A',
+                          bank: '12030000',
+                          user: '123456789',
+                          server: 'http://www.google.com')
+      AqBanking::User.remove(user: '123456789').should == true
+    end
+  end
 end
