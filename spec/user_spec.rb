@@ -94,4 +94,32 @@ describe AqBanking::User do
       AqBanking::User.remove(user: '123456789').should == true
     end
   end
+
+  describe '::list' do
+    context 'without known user' do
+      it 'returns an empty list' do
+        AqBanking::User.list.should == []
+      end
+    end
+
+    context 'with known user' do
+      after(:each) do
+        AqBanking::User.remove(user: '123456789')
+      end
+
+      it 'returns a list with all users' do
+        user = AqBanking::User.add(username: 'A', bank: '12030000',
+                                   user: '123456789',
+                                   server: 'http://www.google.com')
+
+        known_users = AqBanking::User.list
+        known_users.should_not == []
+
+        listed_user = known_users.first
+        listed_user.username.should == user.username
+        listed_user.bank.should == user.bank
+        listed_user.user.should == user.user
+      end
+    end
+  end
 end

@@ -1,4 +1,5 @@
 require 'open3'
+require 'nokogiri'
 
 module AqBanking
   class User
@@ -15,7 +16,6 @@ module AqBanking
     end
 
     class << self
-
       def add(options = {})
         pin = options.delete(:pin)
         options = {
@@ -43,6 +43,22 @@ module AqBanking
         fail 'Missing options: user' unless options[:user]
         _, status = Commander.aqhbci('deluser', user: options[:user])
         status.success?
+      end
+
+      def list
+        output, _ = Commander.aqhbci('listusers', xml: true)
+
+        results = []
+
+        doc = Nokogiri::XML(output)
+        doc.xpath('//user').each do |node|
+          user = AqBanking::User.new(username: node.xpath('//UserName').first.content,
+                                     bank: node.xpath('//BankCode').first.content,
+                                     user: node.xpath('//UserId').first.content)
+          results << user
+        end
+
+        results
       end
 
       def complain_missing_parameters(*args)
