@@ -18,7 +18,8 @@ module AqBanking
       bank: :value,
       user: :value,
       server: :value,
-      username: :value
+      username: :value,
+      xml: :flag
     }
 
     class << self
