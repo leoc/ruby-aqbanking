@@ -7,6 +7,20 @@ module AqBanking
         @pinfile = pinfile
         define_singleton_method(:execute, block) if block_given?
       end
+
+      def aqhbci(command, options = {})
+        options = {
+          pinfile: pinfile
+        }.merge(options)
+        Commander.aqhbci(command, options)
+      end
+
+      def aqcli(command, options = {})
+        options = {
+          pinfile: pinfile
+        }.merge(options)
+        Commander.aqcli(command, options)
+      end
     end
   end
 end
