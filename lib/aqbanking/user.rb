@@ -24,7 +24,7 @@ module AqBanking
           context: '1'
         }.merge(options)
 
-        complain_missing_parameters(options)
+        complain_missing_parameters(:username, :bank, :user, :server, options)
 
         Commander.aqhbci('adduser', options)
 
@@ -45,12 +45,12 @@ module AqBanking
         status.success?
       end
 
-      def complain_missing_parameters(hash)
+      def complain_missing_parameters(*args)
+        hash = args.last.is_a?(Hash) ? args.pop : {}
         missing = []
-        missing << :bank unless hash[:bank]
-        missing << :user unless hash[:user]
-        missing << :server unless hash[:server]
-        missing << :username unless hash[:username]
+        args.each do |param|
+          missing << param unless hash[param]
+        end
         fail "Missing options: #{missing.join(', ')}" unless missing.empty?
       end
     end
