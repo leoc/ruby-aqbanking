@@ -42,12 +42,7 @@ module AqBanking
           charset: 'utf-8',
           cfgfile: AqBanking.config
         }.merge(options)
-        [
-         'aqhbci-tool4',
-         generate_arguments(options, GLOBAL_ARGS),
-         command,
-         generate_arguments(options, CMD_ARGS)
-        ].join(' ').strip
+        execute('aqhbci-tool4', command, options)
       end
 
       def aqcli(command, options = {})
@@ -57,15 +52,27 @@ module AqBanking
           charset: 'utf-8',
           cfgdir: AqBanking.config
         }.merge(options)
-        [
-         'aqbanking-cli',
-         generate_arguments(options, GLOBAL_ARGS),
-         command,
-         generate_arguments(options, CMD_ARGS)
-        ].join(' ').strip
+        execute('aqbanking-cli', command, options)
+      end
+
+      def execute(process, command, options = {})
+        cmd = generate_command(process, command, options)
+        _, _, stderr, status = Open3.popen3(cmd)
+        success = status.value.success?
+        fail "Command failed:\n#{cmd}\n#{stderr.read}" unless success
+        success
       end
 
       private
+
+      def generate_command(process, command, options = {})
+        [
+         process,
+         generate_arguments(options, GLOBAL_ARGS),
+         command,
+         generate_arguments(options, CMD_ARGS)
+        ].reject(&:empty?).join(' ').strip
+      end
 
       def generate_arguments(hash, args)
         args.keys.map do |key|

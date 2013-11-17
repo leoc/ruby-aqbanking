@@ -30,14 +30,25 @@ describe AqBanking::Commander do
   end
 
   context '::aqhbci' do
-    it 'returns a aqhbci-tool4 command' do
-      AqBanking::Commander.aqhbci('test').should == 'aqhbci-tool4 --acceptvalidcerts --noninteractive --charset=utf-8 --cfgfile=. test'
+    it 'executes aqhbci-tool4 command' do
+      expect(AqBanking::Commander).to receive(:execute).with('aqhbci-tool4', 'test', anything)
+      AqBanking::Commander.aqhbci('test')
     end
   end
 
   context '::aqcli' do
-    it 'returns a aqbanking-cli command' do
-      AqBanking::Commander.aqcli('test').should == 'aqbanking-cli --acceptvalidcerts --noninteractive --charset=utf-8 --cfgdir=. test'
+    it 'executes aqbanking-cli command' do
+      expect(AqBanking::Commander).to receive(:execute).with('aqbanking-cli', 'test', anything)
+      AqBanking::Commander.aqcli('test')
+    end
+  end
+
+  context '::execute' do
+    it 'calls open3 with correct command' do
+      expect(Open3).to receive(:popen3).with('process cmd') do
+        [nil, nil, nil, double(value: double(:success? => true))]
+      end
+      AqBanking::Commander.execute('process', 'cmd', {})
     end
   end
 

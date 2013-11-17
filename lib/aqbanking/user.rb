@@ -20,23 +20,13 @@ module AqBanking
 
         complain_missing_parameters(options)
 
-        command = Commander.aqhbci('adduser', options)
-        stdin, stdout, stderr, status = Open3.popen3(command)
+        Commander.aqhbci('adduser', options)
 
-        unless status.value.success?
-          fail "Unable to create user: \n#{stderr.read}"
-        end
         user = User.new(options)
 
         if user && pin
           Commander.with_pin(user, pin) do |f|
-            sysid_command = Commander.aqhbci('getsysid',
-                                             user: options[:user],
-                                             pinfile: f.path.strip)
-            stdin, stdout, stderr, wait_thr = Open3.popen3(sysid_command)
-            unless wait_thr.value.success?
-              fail "Unable to get sysid:\n#{stderr.read}"
-            end
+            aqhbci('getsysid', user: options[:user])
           end
         end
 
@@ -45,11 +35,7 @@ module AqBanking
 
       def remove(options = {})
         fail 'Missing options: user' unless options[:user]
-        command = Commander.aqhbci('deluser', user: options[:user])
-        _, _, stderr, status = Open3.popen3(command)
-        unless status.value.success?
-          fail "Unable to remove user:\n#{stderr.read}"
-        end
+        Commander.aqhbci('deluser', user: options[:user])
       end
 
       def complain_missing_parameters(hash)
