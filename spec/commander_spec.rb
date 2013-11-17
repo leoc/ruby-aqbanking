@@ -31,13 +31,13 @@ describe AqBanking::Commander do
 
   context '::aqhbci' do
     it 'returns a aqhbci-tool4 command' do
-      AqBanking::Commander::aqhbci('test').should == 'aqhbci-tool4 --acceptvalidcerts --noninteractive --charset=utf-8 --cfgfile=. test'
+      AqBanking::Commander.aqhbci('test').should == 'aqhbci-tool4 --acceptvalidcerts --noninteractive --charset=utf-8 --cfgfile=. test'
     end
   end
 
   context '::aqcli' do
     it 'returns a aqbanking-cli command' do
-      AqBanking::Commander::aqcli('test').should == 'aqbanking-cli --acceptvalidcerts --noninteractive --charset=utf-8 --cfgdir=. test'
+      AqBanking::Commander.aqcli('test').should == 'aqbanking-cli --acceptvalidcerts --noninteractive --charset=utf-8 --cfgdir=. test'
     end
   end
 
