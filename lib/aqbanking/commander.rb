@@ -1,3 +1,5 @@
+require 'aqbanking/commander/context'
+
 module AqBanking
   # The commander class is used by all other AqBanking classes to
   # execute aqbanking commandline utilities.
