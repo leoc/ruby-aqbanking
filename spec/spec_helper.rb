@@ -19,3 +19,13 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 end
+
+if File.exists?(File.join(File.dirname(__FILE__), 'live_data.rb'))
+  require 'live_data'
+else
+  require 'live_data.sample'
+end
+
+def when_live
+  yield if TEST_LIVE && block_given?
+end

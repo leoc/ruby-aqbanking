@@ -19,3 +19,4 @@ tmp
 /.ruby-version
 /settings/
 /backends/
+/spec/live_data.rb
