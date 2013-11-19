@@ -19,7 +19,8 @@ module AqBanking
       user: :value,
       server: :value,
       username: :value,
-      xml: :flag
+      xml: :flag,
+      with_accounts: :flag
     }
 
     class << self
