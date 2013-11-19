@@ -77,10 +77,11 @@ module AqBanking
 
       def generate_arguments(hash, args)
         args.keys.map do |key|
+          param = key.to_s.gsub('_', '-')
           if args[key] == :flag && hash[key]
-            "--#{key.to_s}"
+            "--#{param}"
           elsif args[key] == :value && hash[key]
-            "--#{key.to_s}=#{Shellwords.escape(hash[key])}"
+            "--#{param}=#{Shellwords.escape(hash[key])}"
           end
         end.compact.join(' ')
       end
