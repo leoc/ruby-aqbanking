@@ -31,7 +31,7 @@ module AqBanking
         user = User.new(options)
 
         if user && pin
-          Commander.with_pin(user, pin) do |f|
+          Commander.with_pin(user, pin) do
             aqhbci('getsysid', user: options[:user])
           end
         end
