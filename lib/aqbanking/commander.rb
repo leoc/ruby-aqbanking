@@ -24,10 +24,10 @@ module AqBanking
 
     class << self
       def with_pin(user, pin, &block)
-        f = Tempfile.new("pin_#{user.bank}_#{user.user_id}", '/tmp')
+        f = Tempfile.new("pin_#{user.bank}_#{user.user}", '/tmp')
         File.chmod(0400, f.path)
 
-        f.write "PIN_#{user.bank}_#{user.user_id} = \"#{pin}\"\n"
+        f.write "PIN_#{user.bank}_#{user.user} = \"#{pin}\"\n"
         f.flush
 
         Context.new(f.path, &block).execute

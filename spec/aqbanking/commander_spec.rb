@@ -3,7 +3,7 @@ require 'spec_helper'
 describe AqBanking::Commander do
 
   describe '::with_pin' do
-    let(:user) { double('User', bank: '123', user_id: '456') }
+    let(:user) { double('User', bank: '123', user: '456') }
     let(:pin) { 'secure' }
 
     it 'creates a temporary pinfile with 400' do
